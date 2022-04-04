@@ -42,7 +42,8 @@ public class UserSelection {
 		//check if it's there
 		for (int i = 0; i < frequency.size(); i++) {
 			current = frequency.get(i);
-			if (current.get(1).equals(name) && current.get(i).equals(strategy)) {
+			
+			if (current.get(1).equals(name) && current.get(2).equals(strategy)) {
 				found = true;
 				
 				update = (int) current.get(0);
@@ -52,6 +53,7 @@ public class UserSelection {
 				break;
 			}
 		}
+		
 		
 		//if there is no pre-existing array and strategy is not None
 		if (!found && !strategy.equals("None")) {
@@ -105,9 +107,7 @@ public class UserSelection {
 	    return numBrokers;
     }   
     
-    public static void main (String[] args) {
-    	UserSelection selection = new UserSelection();
-    	
-    	
+    public List<List<Object>> getFrequencies() {
+    	return frequency;
     }
 }
