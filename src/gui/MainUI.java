@@ -75,15 +75,12 @@ public class MainUI extends JFrame implements ActionListener {
 	private static JButton button;
 	private static boolean credentials;
 	
-	//log in popup frame, label to display success or failure of logging in
-	private static JFrame loginDialog = new JFrame();
-	private static JLabel failureMessage = new JLabel ("Login");
-	
 	// stores database of brokers
 	UserSelection brokerDatabase = new UserSelection();
 	// stores list of cumulative trades
 	ExecuteTrade cumulativeTrades = new ExecuteTrade();
 
+	//utilize Singleton design pattern to create only one instance of MainUI
 	public static MainUI getInstance() {
 		if (instance == null)
 			instance = new MainUI();
@@ -127,8 +124,6 @@ public class MainUI extends JFrame implements ActionListener {
 		loginFrame.setLocationRelativeTo(null);
 		loginFrame.setVisible(true);
 		loginFrame.setAlwaysOnTop(true);
-		
-		
 		
 		// Set top bar
 		JPanel north = new JPanel();
@@ -287,26 +282,8 @@ public class MainUI extends JFrame implements ActionListener {
 			
 			//display success/failure to user
 			if (!credentials) {
-				JPanel loginDialogPanel = new JPanel();
-				loginDialogPanel.setLayout(null);
-				
-				loginDialog.setTitle("Login failure");
-				loginDialog.add(loginDialogPanel);
-				loginDialog.setSize(new Dimension (400, 200));
-				
-				failureMessage = new JLabel ("Login failure, system will terminate!");
-				failureMessage.setBounds(100, 8, 700, 700);
-				loginDialogPanel.add(failureMessage);
-				
-				loginDialog.add(loginDialogPanel);
-				loginDialog.setLocationRelativeTo(null);
-				loginDialog.setVisible(true);
-				loginDialog.setAlwaysOnTop(true);
-				
-				wait (2000);
-
-				loginDialogPanel.setVisible(false);
-				loginDialog.setVisible(false);
+				loginFrame.setVisible(false);
+				JOptionPane.showMessageDialog(this, "Log in failed, system will terminate!");
 			}	
 			
 			loginFrame.setVisible(false);
@@ -315,21 +292,10 @@ public class MainUI extends JFrame implements ActionListener {
 				frame.setVisible(true);
 			}
 			else {
-				//hide trading UI
-				frame.setVisible(false);
-				
 				//exit system
 				System.exit(1);
 			}
+			return;
 		}
-	}
-	
-	//method creates delay 
-	public static void wait(int ms) {
-	    try {
-	        Thread.sleep(ms);
-	    } catch (InterruptedException ex) {
-	        Thread.currentThread().interrupt();
-	    }
 	}
 }
