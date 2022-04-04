@@ -32,7 +32,7 @@ import javax.swing.table.TableColumn;
 
 import utils.DataVisualizationCreator;
 import utils.ExecuteTrade;
-import utils.LogIn;
+import utils.User;
 import utils.UserSelection;
 
 import javax.swing.JTextField;
@@ -270,12 +270,12 @@ public class MainUI extends JFrame implements ActionListener {
 			}
 		} else if ("Login".equals(command)) {
 			//verify that user credentials are correct
-			LogIn database = new LogIn();
+			User info = User.getInstance();
 			
 			String user = username.getText();
 			String pass = password.getText();
 
-			credentials = database.verify(user, pass);
+			credentials = info.verify(user, pass);
 			
 			//display success/failure to user
 			if (!credentials) {

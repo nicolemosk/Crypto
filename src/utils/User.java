@@ -3,7 +3,20 @@ package utils;
 import java.io.*;
 import java.util.*;
 
-public class LogIn {
+public class User {
+	private static User instance;
+	
+	private User () {
+		//singleton design pattern
+	}
+	
+	public static User getInstance() {
+		if (instance == null) {
+			instance = new User();
+		}
+		return instance;
+	}
+	
 	public boolean verify (String user, String pass) {
 		try {
 			//read input from file
