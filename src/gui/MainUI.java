@@ -50,7 +50,7 @@ public class MainUI extends JFrame implements ActionListener {
 	private List<String> selectedList;
 
 	private JTextArea selectedTickerList;
-//	private JTextArea tickerList;
+	//private JTextArea tickerList;
 	private JTextArea tickerText;
 	private JTextArea BrokerText;
 	private JComboBox<String> strategyList;
