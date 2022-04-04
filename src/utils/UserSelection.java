@@ -14,17 +14,28 @@ public class UserSelection {
 		coinsList = new ArrayList<String[]>();
 		numBrokers = 0;
 	}
+	private static boolean containsBroker (ArrayList<Broker> brokerList, String name) {
+    	for (int i = 0; i < brokerList.size(); i++) {
+    		if (brokerList.get(i).getName().equals(name)) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
 	
-	public void addBroker(String name, String strategy, String[] coinList) {
-		if (!brokerList.contains(name)) { //if broker is not in list yet
+	public boolean addBroker(String name, String strategy, String[] coinList) {
+		if (!containsBroker(brokerList, name)) { //if broker is not in list yet
 			Broker newBroker = new Broker(name, strategy, coinList);
 			
 			brokerList.add(newBroker);
 			strategyList.add(strategy);
 			numBrokers++;
 	        coinsList.add(coinList);
+	        
+	        return true;
 		} else {
 			System.out.println("Broker already in list");
+			return false;
 		}
 	}
 	
@@ -53,6 +64,21 @@ public class UserSelection {
 	
     public int getNumBrokers() {
 	    return numBrokers;
-    }    
+    }   
+    
+    
+    
+    public static void main (String[] args) {
+    	
+    	ArrayList<Broker> brokers = new ArrayList<Broker>();
+    	String[] coin = {"A", "B"};
+    	
+    	brokers.add(new Broker("Zoe", "Strategy-A", coin));
+    	
+    	System.out.println(containsBroker(brokers, "Zoe"));
+        
+    	
+    	
+    }
 	    
 }

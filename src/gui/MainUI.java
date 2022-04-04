@@ -237,8 +237,6 @@ public class MainUI extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
 		if ("refresh".equals(command)) { // after perform trade, then start getting each selection broker
-			
-
 			// stores database of brokers
 			UserSelection brokerDatabase = new UserSelection();
 			
@@ -278,7 +276,13 @@ public class MainUI extends JFrame implements ActionListener {
 				}
 				String strategyName = strategyObject.toString(); // strategy name string
 				System.out.println(traderName + " " + Arrays.toString(coinNames) + " " + strategyName); // could use here to make selection object
-				brokerDatabase.addBroker(traderName, strategyName, coinNames);
+				boolean add = brokerDatabase.addBroker(traderName, strategyName, coinNames);
+				
+				if (!add) {
+					JOptionPane.showMessageDialog(this, "repeat broker name added, please change name on line " + (count + 1) + "!");
+					return;
+					
+				}
 		}
 		
 		cumulativeTrades.performTrade(brokerDatabase);
