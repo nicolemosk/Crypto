@@ -1,19 +1,29 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import gui.MainUI;
 
 public class UserSelection {
-	private ArrayList<Broker> brokerList;
-	private ArrayList<String> strategyList;
-	private ArrayList<String[]> coinsList;
+	private static UserSelection instance;
+	
+	private ArrayList<Broker> brokerList = new ArrayList<Broker>(); 
+	private ArrayList<String> strategyList = new ArrayList<String>();
+	private ArrayList<String[]> coinsList = new ArrayList<String[]>();
 	private int numBrokers;
 	
-	public UserSelection() {
-        brokerList = new ArrayList<Broker>(); 
-		strategyList = new ArrayList<String>();
-		coinsList = new ArrayList<String[]>();
-		numBrokers = 0;
+	private static List<List<Object>> frequency = new ArrayList<List<Object>>();
+		
+	//implementing a singleton design pattern 
+	private UserSelection getInstance() {
+		if (instance == null) {
+			instance = new UserSelection();
+		}
+		
+		return instance;
 	}
+	
 	private static boolean containsBroker (ArrayList<Broker> brokerList, String name) {
     	for (int i = 0; i < brokerList.size(); i++) {
     		if (brokerList.get(i).getName().equals(name)) {
@@ -24,6 +34,35 @@ public class UserSelection {
     }
 	
 	public boolean addBroker(String name, String strategy, String[] coinList) {
+		List<Object> current = null;
+		int update;
+		boolean found = false;
+		
+		//either you find it or you don't 
+		//check if it's there
+		for (int i = 0; i < frequency.size(); i++) {
+			current = frequency.get(i);
+			if (current.get(1).equals(name) && current.get(i).equals(strategy)) {
+				found = true;
+				
+				update = (int) current.get(0);
+				update++;
+				current.set(0, update);
+				
+				break;
+			}
+		}
+		
+		//if there is no pre-existing array and strategy is not None
+		if (!found && !strategy.equals("None")) {
+			current = new ArrayList<Object>();
+			current.add(1);
+			current.add(name);
+			current.add(strategy);
+			
+			frequency.add(current);
+		}
+		
 		if (!containsBroker(brokerList, name)) { //if broker is not in list yet
 			Broker newBroker = new Broker(name, strategy, coinList);
 			
@@ -66,19 +105,9 @@ public class UserSelection {
 	    return numBrokers;
     }   
     
-    
-    
     public static void main (String[] args) {
-    	
-    	ArrayList<Broker> brokers = new ArrayList<Broker>();
-    	String[] coin = {"A", "B"};
-    	
-    	brokers.add(new Broker("Zoe", "Strategy-A", coin));
-    	
-    	System.out.println(containsBroker(brokers, "Zoe"));
-        
+    	UserSelection selection = new UserSelection();
     	
     	
     }
-	    
 }

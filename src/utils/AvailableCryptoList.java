@@ -124,7 +124,6 @@ public class AvailableCryptoList {
 		return null;
 	}
 	
-	
 	public String getCryptoIDfromTicker(String tickerName) {
 		return tickerIDMap.get(tickerName.toLowerCase());
 	}

@@ -6,8 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class TradeStrategy {
+	private static List<String> TradeExecution = new ArrayList<>();
+	
 	public List<String> getExecution(String strategy, String[] coins, String name) { //selection object
-		List<String> TradeExecution = new ArrayList<>();
 		TradeExecution.add(name);
 		TradeExecution.add(strategy);
 		
@@ -15,7 +16,7 @@ public class TradeStrategy {
 		List<Double> prices = new ArrayList<>();
 		for(int i = 0; i < coins.length; i++) {
 			//example parameters: ("bitcoin", "04-02-2022")
-			prices.add(coinGecko.getPriceForCoin(coins[i], date())); 
+			prices.add(coinGecko.getPriceForCoin(AvailableCryptoList.getInstance().getCryptoIDfromTicker(coins[i]), date())); 
 		}
 		
 		if(strategy.equals("Strategy-A")) {
@@ -38,9 +39,15 @@ public class TradeStrategy {
 			for (int i=0; tradeActionInfo != null && i < tradeActionInfo.size(); i++) {
 				TradeExecution.add(tradeActionInfo.get(i));
 			};
+		} else if (strategy.equals("None")) {
+			TradeExecution.remove(name);
+			TradeExecution.remove(strategy);
+		}
+		
+		if (!strategy.equals("None")) {
+			TradeExecution.add(date());
 		}
 	
-		TradeExecution.add(date());
 	// final format of TradeExecution: {name, strategy, action, coin, quantity, price}	
 		return TradeExecution;
 	}
@@ -83,6 +90,8 @@ public class TradeStrategy {
 				execution.add("2");
 				execution.add(Double.toString(Bitcoin));
 			}
+		} else {
+			FailTrade();
 		}
 		return execution;
 	}
@@ -118,6 +127,8 @@ public class TradeStrategy {
 				execution.add("3");
 				execution.add(Double.toString(Bitcoin));
 			}
+		} else {
+			FailTrade();
 		}
 		return execution;
 	}
@@ -151,6 +162,8 @@ public class TradeStrategy {
 				execution.add("500");
 				execution.add(Double.toString(Cardano));
 			}
+		} else {
+			FailTrade();
 		}
 		return execution;
 	}
@@ -183,7 +196,16 @@ public class TradeStrategy {
 				execution.add("100");
 				execution.add(Double.toString(Fantom));
 			}
+		} else {
+			FailTrade();
 		}
 		return execution;
+	}
+	
+	private static void FailTrade() {
+		TradeExecution.add("Fail");
+		TradeExecution.add("Null");
+		TradeExecution.add("Null");
+		TradeExecution.add("Null");
 	}
 }
