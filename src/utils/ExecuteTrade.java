@@ -14,8 +14,8 @@ public class ExecuteTrade {
 
 	List<List<String>> cumulativeTrades = new ArrayList<List<String>>(); // stores list of cumulative trading history for log table
 	
-	List<List<String>> strategyFrequencies = new ArrayList<List<String>>(); // breaks down each strategies frequencies for histogram
-	
+	// breaks down each strategies frequencies for histogram
+	List<List<String>> strategyFrequencies = new ArrayList<List<String>>();
 	
 	TradeStrategy trader = new TradeStrategy(); // used to perform trades
 	
@@ -27,13 +27,9 @@ public class ExecuteTrade {
 			cumulativeTrades.add(trader.getExecution(currBroker.getStrategy(), currBroker.getCoinList(), currBroker.getName()));
 	// format of getExecution: {name, strategy, action, coin, quantity, price}
 		};
-		
 	}
 	
 	public List<List<String>> getCumulativeTrades () {
-		
-		return cumulativeTrades;
-		
+		return cumulativeTrades;	
 	}
-	
 }
