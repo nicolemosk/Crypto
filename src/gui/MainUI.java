@@ -236,31 +236,83 @@ public class MainUI extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
 		if ("refresh".equals(command)) { // after perform trade, then start getting each selection broker
+			
+
+			// stores database of brokers
+			UserSelection brokerDatabase = new UserSelection();
+			
 			for (int count = 0; count < dtm.getRowCount(); count++){
-					Object traderObject = dtm.getValueAt(count, 0); 
-					if (traderObject == null) {
-						JOptionPane.showMessageDialog(this, "please fill in Trader name on line " + (count + 1) );
-						return;
-					} // CHECK HERE IF NAME MATCHES A PREVIOUS BROKER NAME
-					String traderName = traderObject.toString(); // traderName string
-					Object coinObject = dtm.getValueAt(count, 1); 
-					if (coinObject == null) {
-						JOptionPane.showMessageDialog(this, "please fill in cryptocoin list on line " + (count + 1) );
+				Object traderObject = dtm.getValueAt(count, 0); 
+				if (traderObject == null) {
+					JOptionPane.showMessageDialog(this, "please fill in Trader name on line " + (count + 1) );
+					return;
+				}
+				String traderName = traderObject.toString();
+				/*
+				if (brokerDatabase.inDatabase(traderName) == null) {
+					JOptionPane.showMessageDialog(this, "please change your Trader name on line " + (count + 1) );
+					return;// CHECK HERE IF NAME MATCHES A PREVIOUS BROKER NAME
+				};
+				*/
+				Object coinObject = dtm.getValueAt(count, 1); 
+				if (coinObject == null) {
+					JOptionPane.showMessageDialog(this, "please fill in cryptocoin list on line " + (count + 1) );
+					return;
+				}
+				String[] coinNames = coinObject.toString().split(","); // list of coins
+				// ensures AvailableCryptoList can properly read the ticker symbol
+				for (int i=0; i < coinNames.length; i++) {
+					coinNames[i] = coinNames[i].trim();
+				}
+				Object strategyObject = dtm.getValueAt(count, 2);
+				if (strategyObject == null) {
+					JOptionPane.showMessageDialog(this, "please fill in strategy name on line " + (count + 1) );
+					return;
+				} else {
+						String ticker = AvailableCryptoList.getInstance().coinAvailable(coinNames);
+					if (ticker != null) {
+						JOptionPane.showMessageDialog(this, "the following coin is not valid: " + ticker + " on line " + (count + 1) );
 						return;
 					}
-					String[] coinNames = coinObject.toString().split(","); // list of coins
-					Object strategyObject = dtm.getValueAt(count, 2);
-					if (strategyObject == null) {
-						JOptionPane.showMessageDialog(this, "please fill in strategy name on line " + (count + 1) );
-						return;
-					}
-					String strategyName = strategyObject.toString(); // strategy name string
-					System.out.println(traderName + " " + Arrays.toString(coinNames) + " " + strategyName); // could use here to make selection object
-	        }
-			cumulativeTrades.performTrade(brokerDatabase);
-			stats.removeAll();
-			DataVisualizationCreator creator = new DataVisualizationCreator();
-			//creator.createCharts(cumulativeTrades.getCumulativeTrades(), histoList);
+				}
+				String strategyName = strategyObject.toString(); // strategy name string
+				System.out.println(traderName + " " + Arrays.toString(coinNames) + " " + strategyName); // could use here to make selection object
+				brokerDatabase.addBroker(traderName, strategyName, coinNames);
+		}
+		
+		cumulativeTrades.performTrade(brokerDatabase);
+		
+		System.out.println(cumulativeTrades.getCumulativeTrades().size());
+		System.out.println(brokerDatabase.getNumBrokers());
+		
+		stats.removeAll();
+		DataVisualizationCreator creator = new DataVisualizationCreator();
+	// ---------------- TESTING PURPOSES ONLY (TO DELETE FOR FINAL PRODUCT) -------------------------
+		List<List<String>> tableList = new ArrayList<List<String>>();
+		List<String> tradeData = new ArrayList<String>();
+		tradeData.add("taylor");
+		tradeData.add("strategy-a");
+		tradeData.add("buy");
+		tradeData.add("BTC");
+		tradeData.add("300");
+		tradeData.add("1.00");
+		tradeData.add("03-06-2002");
+		tableList.add(tradeData);
+		
+		List<List<String>> histoList = new ArrayList<List<String>>();
+		List<String> freqData = new ArrayList<String>();
+		freqData.add("6");
+		freqData.add("Trader-1");
+		freqData.add("Strategy-A");
+		histoList.add(freqData);
+		
+		List<String> freqData2 = new ArrayList<String>();
+		freqData2.add("5");
+		freqData2.add("Trader-2");
+		freqData2.add("Strategy-B");
+		histoList.add(freqData2);
+		
+		creator.createCharts(cumulativeTrades.getCumulativeTrades(), histoList);
 		} else if ("addTableRow".equals(command)) {
 			dtm.addRow(new String[3]); 
 		} else if ("remTableRow".equals(command)) {

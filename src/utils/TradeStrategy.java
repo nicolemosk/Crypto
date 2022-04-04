@@ -55,7 +55,7 @@ public class TradeStrategy {
 	
 	//A: if Bitcoin (BTC) > 46k and Ethereum (ETH) < 3800 then buy 800 units Cardano (ADA), else sell 2 Bitcoin (BTC)
 	private static List<String> StrategyA(String[] coins, List<Double> prices) {
-		List<String> execution = null;
+		List<String> execution = new ArrayList<String>();
 		DataFetcher coinGecko = new DataFetcher();
 		
 		Double Bitcoin = null;
@@ -89,7 +89,7 @@ public class TradeStrategy {
 
 	//B: if Cardano (ADA) > $1 then buy 10 LUNA, else sell 3 Bitcoin
 	private static List<String> StrategyB(String[] coins, List<Double> prices) {
-		List<String> execution = null;
+		List<String> execution = new ArrayList<String>();
 		DataFetcher coinGecko = new DataFetcher();
 		
 		Double Cardano = null;
@@ -123,7 +123,7 @@ public class TradeStrategy {
 	}
 	//C: if Ethereum (ETH) > $3800 and Cardano (ADA) < $1 buy 200 Fantom (FTM), else sell 500 Cardano (ADA)
 	private static List<String> StrategyC(String[] coins, List<Double> prices) {
-		List<String> execution = null;
+		List<String> execution = new ArrayList<String>();
 		DataFetcher coinGecko = new DataFetcher();
 		
 		Double Ethereum = null;
@@ -157,7 +157,7 @@ public class TradeStrategy {
 	
 	//D: if price of Cardano (ADA) > price Fantom (FTM), then buy 100 FTM, else buy 100 Cardano
 	private static List<String> StrategyD(String[] coins, List<Double> prices) {
-		List<String> execution = null;
+		List<String> execution = new ArrayList<String>();
 		DataFetcher coinGecko = new DataFetcher();
 		
 		Double Cardano = null;
