@@ -33,11 +33,8 @@ import gui.MainUI;
 public class DataVisualizationCreator {
 	
 	public void createCharts(List<List<String>> tableData, List<List<String>> histogramData) {
-	
-	
 		createTableOutput(tableData);
 		createBar(histogramData);
-		
 	}
 	
 	private void createTableOutput(List<List<String>> tradeActions) {
@@ -45,7 +42,6 @@ public class DataVisualizationCreator {
 		Object[] columnNames = {"Trader","Strategy","Action", "CryptoCoin","Quantity","Price","Date"};
 		
 		// tradeActions format: {trader name, strategy, action, coin, quantity, price, date}
-		
 		Object[][] data = new Object[tradeActions.size()][7];
 		for (int i=0; i < data.length; i++) {
 			List<String> currLine = tradeActions.get(i);
@@ -69,8 +65,6 @@ public class DataVisualizationCreator {
                 TitledBorder.CENTER,
                 TitledBorder.TOP));
 		
-	
-		
 		scrollPane.setPreferredSize(new Dimension(800, 300));
 		table.setFillsViewportHeight(true);;
 		
@@ -78,11 +72,9 @@ public class DataVisualizationCreator {
 	}
 	
 	public void createBar(List<List<String>> strategyFrequencies) {
-		
 		// strategyFrequenciesFormat: {{frequency, trader, strategy}, ...}
 		
-		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-	
+		DefaultCategoryDataset dataset = new DefaultCategoryDataset();	
 		for (int i=0; i < strategyFrequencies.size(); i++) {
 			List<String> tradeItem = strategyFrequencies.get(i);
 			dataset.setValue(Integer.parseInt(tradeItem.get(0)), tradeItem.get(1), tradeItem.get(2));
@@ -102,8 +94,8 @@ public class DataVisualizationCreator {
 		//plot.mapDatasetToRangeAxis(0, 0);// 1st dataset to 1st y-axis
 		//plot.mapDatasetToRangeAxis(1, 1); // 2nd dataset to 2nd y-axis
 
-		JFreeChart barChart = new JFreeChart("Actions Performed By Traders So Far", new Font("Serif", java.awt.Font.BOLD, 18), plot,
-				true);
+		JFreeChart barChart = new JFreeChart("Actions Performed By Traders So Far", new 
+				Font("Serif", java.awt.Font.BOLD, 18), plot,true);
 
 		ChartPanel chartPanel = new ChartPanel(barChart);
 		chartPanel.setPreferredSize(new Dimension(600, 300));
@@ -111,5 +103,4 @@ public class DataVisualizationCreator {
 		chartPanel.setBackground(Color.white);
 		MainUI.getInstance().updateStats(chartPanel);
 	}
-
 }

@@ -13,7 +13,7 @@ public class UserSelection {
 	private ArrayList<String[]> coinsList = new ArrayList<String[]>();
 	private int numBrokers;
 	
-	private static List<List<Object>> frequency = new ArrayList<List<Object>>();
+	private static List<List<String>> frequency = new ArrayList<List<String>>();
 		
 	//implementing a singleton design pattern 
 	private UserSelection getInstance() {
@@ -34,7 +34,7 @@ public class UserSelection {
     }
 	
 	public boolean addBroker(String name, String strategy, String[] coinList) {
-		List<Object> current = null;
+		List<String> current = null;
 		int update;
 		boolean found = false;
 		
@@ -46,19 +46,18 @@ public class UserSelection {
 			if (current.get(1).equals(name) && current.get(2).equals(strategy)) {
 				found = true;
 				
-				update = (int) current.get(0);
+				update = Integer.parseInt(current.get(0));
 				update++;
-				current.set(0, update);
+				current.set(0, Integer.toString(update));
 				
 				break;
 			}
 		}
-		
-		
+	
 		//if there is no pre-existing array and strategy is not None
 		if (!found && !strategy.equals("None")) {
-			current = new ArrayList<Object>();
-			current.add(1);
+			current = new ArrayList<String>();
+			current.add(Integer.toString(1));
 			current.add(name);
 			current.add(strategy);
 			
@@ -74,6 +73,7 @@ public class UserSelection {
 	        coinsList.add(coinList);
 	        
 	        return true;
+	        
 		} else {
 			System.out.println("Broker already in list");
 			return false;
@@ -107,7 +107,7 @@ public class UserSelection {
 	    return numBrokers;
     }   
     
-    public List<List<Object>> getFrequencies() {
+    public static List<List<String>> getFrequencies() {
     	return frequency;
     }
 }
