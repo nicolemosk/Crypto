@@ -6,9 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class TradeStrategy {
-	private static List<String> TradeExecution = new ArrayList<>();
 	
 	public List<String> getExecution(String strategy, String[] coins, String name) { //selection object
+		List<String> TradeExecution = new ArrayList<>();
 		TradeExecution.add(name);
 		TradeExecution.add(strategy);
 		
@@ -91,7 +91,7 @@ public class TradeStrategy {
 				execution.add(Double.toString(Bitcoin));
 			}
 		} else {
-			FailTrade();
+			execution = FailTrade();
 		}
 		return execution;
 	}
@@ -128,7 +128,7 @@ public class TradeStrategy {
 				execution.add(Double.toString(Bitcoin));
 			}
 		} else {
-			FailTrade();
+			execution = FailTrade();
 		}
 		return execution;
 	}
@@ -163,7 +163,7 @@ public class TradeStrategy {
 				execution.add(Double.toString(Cardano));
 			}
 		} else {
-			FailTrade();
+			execution = FailTrade();
 		}
 		return execution;
 	}
@@ -197,15 +197,17 @@ public class TradeStrategy {
 				execution.add(Double.toString(Fantom));
 			}
 		} else {
-			FailTrade();
+			execution = FailTrade();
 		}
 		return execution;
 	}
 	
-	private static void FailTrade() {
-		TradeExecution.add("Fail");
-		TradeExecution.add("Null");
-		TradeExecution.add("Null");
-		TradeExecution.add("Null");
+	private static List<String> FailTrade() {
+		List<String> execution = new ArrayList<String>();
+		execution.add("Fail");
+		execution.add("Null");
+		execution.add("Null");
+		execution.add("Null");
+		return execution;
 	}
 }
