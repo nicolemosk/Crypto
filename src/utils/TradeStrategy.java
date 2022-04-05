@@ -80,12 +80,12 @@ public class TradeStrategy {
 			Double Cardano = coinGecko.getPriceForCoin("cardano", date());
 			
 			if(Bitcoin > 58000 && Ethereum < 4000) {
-				execution.add("buy");
+				execution.add("Buy");
 				execution.add("ADA");
 				execution.add("800");
 				execution.add(Double.toString(Cardano)); 
 			} else {
-				execution.add("sell");
+				execution.add("Sell");
 				execution.add("BTC");
 				execution.add("2");
 				execution.add(Double.toString(Bitcoin));
@@ -117,12 +117,12 @@ public class TradeStrategy {
 			Luna = coinGecko.getPriceForCoin("terra-luna", date());
 			
 			if(Cardano > 1) {
-				execution.add("buy");
+				execution.add("Buy");
 				execution.add("LUNA"); //what is the shorthand 
 				execution.add("10");
 				execution.add(Double.toString(Luna)); 
 			} else {
-				execution.add("sell");
+				execution.add("Sell");
 				execution.add("BTC");
 				execution.add("3");
 				execution.add(Double.toString(Bitcoin));
@@ -152,12 +152,12 @@ public class TradeStrategy {
 			Double Fantom = coinGecko.getPriceForCoin("fantom", date());	
 			
 			if(Ethereum > 38000 && Cardano < 1) {
-				execution.add("buy");
+				execution.add("Buy");
 				execution.add("FTM");
 				execution.add("200");
 				execution.add(Double.toString(Fantom)); 
 			} else {
-				execution.add("sell");
+				execution.add("Sell");
 				execution.add("ADA");
 				execution.add("500");
 				execution.add(Double.toString(Cardano));
@@ -186,12 +186,12 @@ public class TradeStrategy {
 		
 		if (Cardano != null && Fantom != null) { // if both coins are in the list of requested coins			
 			if(Cardano > Fantom) {
-				execution.add("buy");
+				execution.add("Buy");
 				execution.add("FTM");
 				execution.add("100");
 				execution.add(Double.toString(Cardano)); 
 			} else {
-				execution.add("buy");
+				execution.add("Buy");
 				execution.add("ADA");
 				execution.add("100");
 				execution.add(Double.toString(Fantom));
